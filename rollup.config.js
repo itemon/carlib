@@ -14,7 +14,7 @@ module.exports = {
     format: 'cjs',
     banner: '#!/usr/bin/env node'
   },
-  external: ['mysql'],
+  external: ['mysql', 'axios'],
   plugins: [
     resolve(),
     commonjs({
