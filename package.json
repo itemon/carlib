@@ -1,5 +1,5 @@
 {
-  "name": "@tujia/carlib-cli",
+  "name": "carlib-cli",
   "version": "0.0.1",
   "description": "标准工具工程",
   "main": "bin/carlib-cli.js",
@@ -59,7 +59,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.corp.tujia.com:h5-libs/carlib-cli.git"
+    "url": ""
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
