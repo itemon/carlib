@@ -1,0 +1,4 @@
+user: root
+database: car
+host: 127.0.0.1
+password: ""
