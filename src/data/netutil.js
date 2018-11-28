@@ -35,6 +35,16 @@ const getNetworkData = async (opts: HttpParam): Promise<any> => {
   })
 }
 
+const getNetworkImageStream = async (url: string): Promise<Object> => {
+  const resp = await axios({
+    url,
+    method: 'get',
+    responseType: 'stream',
+  })
+  return Promise.resolve(resp.data)
+}
+
 export {
   getNetworkData,
+  getNetworkImageStream,
 }

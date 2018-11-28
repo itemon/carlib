@@ -2,7 +2,8 @@
 
 import { toPinYinKey } from '../utils/'
 import mysql from 'mysql'
-import { extname } from 'path'
+import { extname, resolve } from 'path'
+import { saveLogoToDisk } from '../data/brands'
 
 const brandORM = (conn: any, brands: Array<Object>, insertIds: Array<number>, callback?: (ids: Array<number>) => void) => {
   if (brands.length == 0) {
@@ -34,6 +35,19 @@ const brandORM = (conn: any, brands: Array<Object>, insertIds: Array<number>, ca
   })
 }
 
+const logoSaveORM = async (brands: Array<Object>, callback: () => void) => {
+  if (brands.length == 0) {
+    if (callback)
+      callback.call(callback)
+    return
+  }
+  let b: any = brands.shift()
+  await saveLogoToDisk(b)
+
+  logoSaveORM(brands, callback)
+}
+
 export {
-  brandORM
+  brandORM,
+  logoSaveORM,
 }

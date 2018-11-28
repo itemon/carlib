@@ -6,6 +6,7 @@ import babel from 'rollup-plugin-babel'
 import commonjs from 'rollup-plugin-commonjs'
 import flow from 'rollup-plugin-flow'
 import yaml from 'rollup-plugin-yaml'
+import replace from 'rollup-plugin-replace'
 
 module.exports = {
   input: 'src/index.js',
@@ -16,6 +17,14 @@ module.exports = {
   },
   external: ['mysql', 'axios', 'iconv-lite', 'pinyin'],
   plugins: [
+    replace({
+      include: 'src/consts.js',
+      exclude: 'node_modules/**',
+      delimiters: ['', ''],
+      values: {
+        "DEBUG = true": "DEBUG = false"
+      }
+    }),
     resolve(),
     commonjs({
       include: 'node_modules/**',
