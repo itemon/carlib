@@ -26,11 +26,10 @@ const brandORM = (conn: any, brands: Array<Object>, insertIds: Array<number>, ca
   conn.query(sql, (err, results, fields) => {
     if (err) {
       console.log('insert row failed ', err)
-      return
     } else {
       console.log('insert row with id ', results.insertId)
       insertIds.push(results.insertId)
-      //brandORM(conn, brands, insertIds)
+      brandORM(conn, brands, insertIds, callback)
     }
   })
 }
