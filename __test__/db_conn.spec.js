@@ -3,12 +3,17 @@
 import { connect, disconnect } from '../src/db/conn'
 import { readJDBC } from '../libs/utils'
 
+let conn
+
 afterAll (() => {
   disconnect()
 })
 
-test ('测试db的连通性', () => {
+beforeAll(() => {
   const connConfig = readJDBC()
-  const conn = connect(connConfig)
+  conn = connect(connConfig)
+})
+
+test ('测试db的连通性', () => {
   expect(conn).toBeDefined()
 })

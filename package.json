@@ -65,6 +65,8 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/runtime": "^7.1.2",
     "axios": "^0.18.0",
-    "mysql": "^2.16.0"
+    "iconv-lite": "^0.4.24",
+    "mysql": "^2.16.0",
+    "pinyin": "^2.8.3"
   }
 }

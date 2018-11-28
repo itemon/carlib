@@ -5,4 +5,5 @@ declare module './config/jdbc.yaml' {
 
 declare type HttpParam = {
   url: string,
+  encoding?: string,
 }

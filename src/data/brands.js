@@ -1,17 +1,12 @@
 // @flow
 
-import axios from 'axios'
 import { URL_BRAND } from '../consts'
-
-const getNetworkData = async (opts: HttpParam): Promise<any> => {
-  const { url } = opts
-  const resp = await axios.get(url)
-  return Promise.resolve(resp.data)
-}
+import { getNetworkData } from './netutil'
 
 const getBrands = async (): Promise<Array<Object>> => {
   const brandParam: HttpParam = {
     url: URL_BRAND,
+    encoding: 'gbk',
   }
   const resp = await getNetworkData(brandParam)
   return Promise.resolve(resp.result.branditems)
