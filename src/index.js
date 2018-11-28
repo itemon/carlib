@@ -1,7 +1,7 @@
 // @flow
 
 import { HELLO } from './consts'
-import { connect } from './db/conn'
+import { connect, disconnect } from './db/conn'
 import jdbc from './config/jdbc.yaml'
 import { getBrands } from './data/brands'
 import { brandORM } from './db/orm_brand'
@@ -12,7 +12,8 @@ const insertBrands = async () => {
   const brands = await getBrands()
   const ids = []
   brandORM(conn, brands, ids, (ids) => {
-    console.log(`successfully insert ${ ids.length }records`)
+    console.log(`successfully insert ${ ids.length } records`)
+    disconnect()
   })
 }
 
