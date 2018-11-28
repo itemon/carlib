@@ -1,2 +1,5 @@
 node_modules
 bin
+thumbs/*.png
+thumbs/*.jpg
+thumbs/*.gif
