@@ -11,7 +11,8 @@ const connect = (jdbc: Object) => {
   conn = mysql.createConnection(connConfig)
   try {
     conn.connect((err) => {
-      console.error('Can not establish connection ', err)
+      if (err)
+        console.error('Can not establish connection ', err)
     })
   } catch (err) {
     console.error('Can not establish connection ', err)

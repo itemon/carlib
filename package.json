@@ -6,6 +6,7 @@
   "scripts": {
     "test": "jest",
     "dev": "flow check && rollup -c -w",
+    "start": "flow check && rollup -c && node bin/carlib-cli",
     "build": "flow check && rollup -c"
   },
   "files": [
