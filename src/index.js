@@ -54,5 +54,9 @@ const insertOEMs = async () => {
   })
 }
 
-//insertBrands()
-insertOEMs()
+const [, , args] = process.argv
+if (Object.is(args, '--oem')) {
+  insertOEMs()
+} else {
+  insertBrands()
+}
