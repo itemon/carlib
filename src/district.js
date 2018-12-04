@@ -25,7 +25,7 @@ const getCities = async (page: any, province: Province): Promise<Array<City>> =>
   console.log('goto: ', province.text,'-', province.url)
   await page.goto(province.url)
 
-  const cities = await page.$$eval('.citytable .citytr', nodelist => {
+  const handler = nodelist => {
     return Array.prototype.map.call(nodelist, i => {
       const ns = i.querySelectorAll('a')
       const code = ns[0].textContent.trim().substring(0, 6)
@@ -35,7 +35,12 @@ const getCities = async (page: any, province: Province): Promise<Array<City>> =>
         url: ns[0].href,
       }
     })
-  })
+  }
+
+  let cities = await page.$$eval('.citytable .citytr', handler)
+  if (cities.length == 0) {
+    cities = await page.$$eval('.countytable .countytr', handler)
+  }
 
   const [firstCity] = cities
   province.code = firstCity.code.substring(0, 2) + '0000'
@@ -46,11 +51,11 @@ const getCities = async (page: any, province: Province): Promise<Array<City>> =>
 
   // not high priority city
   // test deep sub city
-  let city = cities[cities.length - 1]
-  if (city.text == '自治区直辖县级行政区划') {
+  /**/let city = cities[cities.length - 1]
+  if (city.text.indexOf('直辖县级行政区划') != -1) {
     let subcities = await getCities(page, city)
     cities.pop()
-    Array.prototype.push.call(cities, subcities)
+    Array.prototype.push.apply(cities, subcities)
   }
 
   return Promise.resolve(cities)
