@@ -3,6 +3,7 @@
 import { createBrowser, destroyBrowser } from './browser/instance'
 import { toPinYinKey } from './utils/'
 import { join } from 'path'
+import { writeFileSync } from 'fs'
 
 const getProvinces = async (page: any): Promise<Array<Province>> => {
   await page.goto('http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2017/index.html')
@@ -102,11 +103,11 @@ const toSql = (p: Province, cities: Array<City>): string => {
   const parentId = ++id
   const sql = `
     insert into district (id, name, name_en, name_abbr, name_abbr_en, code, parent_id, create_time, update_time, type) values
-    (${ parentId }, '${ p.text }', '${ toPinYinKey(p.text) }', '${ p.code ? abbrMap[p.code] : "" }', '', ${ p.code || '000000' }, 0, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'p')${ cities.length == 0 ? '' : `,` }
+    (${ parentId }, '${ p.text }', '${ toPinYinKey(p.text) }', '${ p.code ? abbrMap[p.code] : "" }', '', ${ p.code || '000000' }, 0, UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000, 'p')${ cities.length == 0 ? '' : `,` }
     ${
       cities.map(i => {
         let py = toPinYinKey(i.text)
-        return `(${ ++id }, '${ i.text }', '${ py }', '', '', '${ i.code }', ${ parentId }, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), 'c')`
+        return `(${ ++id }, '${ i.text }', '${ py }', '', '', '${ i.code }', ${ parentId }, UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000, 'c')`
       }).join(',\n ')
     };
   `
@@ -129,6 +130,12 @@ const updateDistrict = async (path: ?string) => {
     sqls.push(toSql(p, cities))
     await newPage.close()
   }
+
+  const localFile = join(process.cwd(), 'district.sql')
+  writeFileSync(localFile, sqls.join('\n'), {
+    encoding: 'utf8'
+  })
+  console.log(`Successfully write file to ${ localFile }`)
 
   //await destroyBrowser()
   //await page.close()
