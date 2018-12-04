@@ -7,6 +7,7 @@
     "test": "jest",
     "dev": "flow check && rollup -c -w",
     "start": "flow check && rollup -c && node bin/carlib-cli",
+    "update:district": "sh run.sh",
     "build": "flow check && rollup -c"
   },
   "files": [
@@ -69,6 +70,7 @@
     "axios": "^0.18.0",
     "iconv-lite": "^0.4.24",
     "mysql": "^2.16.0",
-    "pinyin": "^2.8.3"
+    "pinyin": "^2.8.3",
+    "puppeteer": "^1.11.0"
   }
 }
