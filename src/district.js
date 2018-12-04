@@ -103,7 +103,7 @@ const toSql = (p: Province, cities: Array<City>): string => {
   const parentId = ++id
   const sql = `
     insert into district (id, name, name_en, name_abbr, name_abbr_en, code, parent_id, create_time, update_time, type) values
-    (${ parentId }, '${ p.text }', '${ toPinYinKey(p.text) }', '${ p.code ? abbrMap[p.code] : "" }', '', ${ p.code || '000000' }, 0, UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000, 'p')${ cities.length == 0 ? '' : `,` }
+    (${ parentId }, '${ p.text }', '${ toPinYinKey(p.text) }', '${ p.code ? abbrMap[p.code] : "" }', '', ${ p.code || '000000' }, 0, UNIX_TIMESTAMP() * 1000, UNIX_TIMESTAMP() * 1000, ${ cities.length == 0 ? 'c' : 'p' })${ cities.length == 0 ? '' : `,` }
     ${
       cities.map(i => {
         let py = toPinYinKey(i.text)
